@@ -1,5 +1,7 @@
 # Phala Cloud Next.js Starter
 
+[![](https://phala-cloud-git-templates-phala.vercel.app/deploy-button.svg)](https://phala-cloud-git-templates-phala.vercel.app/templates/nextjs-starter)
+
 This is a template for developing a [Next.js](https://nextjs.org/)-based app with boilerplate code targeting deployment on [Phala Cloud](https://cloud.phala.network/) and [DStack](https://github.com/dstack-TEE/dstack/). It includes the SDK by default to make integration with TEE features easier. This repo also includes a default Dockerfile and docker-compose.yml for deployment.
 
 ## Requirements
@@ -9,7 +11,7 @@ This is a template for developing a [Next.js](https://nextjs.org/)-based app wit
 
 ## Development
 
-First, you need to clone this repo:
+First, you need to clone this repo or [use this template](https://github.com/new?template_name=phala-cloud-bun-starter&template_owner=Phala-Network&name=phala-cloud-nextjs-starter):
 
 ```shell
 git clone --depth 1 https://github.com/Phala-Network/phala-cloud-nextjs-starter.git
