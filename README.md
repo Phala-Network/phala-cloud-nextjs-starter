@@ -1,5 +1,7 @@
 # Phala Cloud Next.js Starter
 
+[![](https://cloud.phala.network/deploy-button.svg)](https://cloud.phala.network/templates/nextjs-starter)
+
 This is a template for developing a [Next.js](https://nextjs.org/)-based app with boilerplate code targeting deployment on [Phala Cloud](https://cloud.phala.network/) and [DStack](https://github.com/dstack-TEE/dstack/). It includes the SDK by default to make integration with TEE features easier. This repo also includes a default Dockerfile and docker-compose.yml for deployment.
 
 ## Requirements
