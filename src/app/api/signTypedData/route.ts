@@ -1,5 +1,5 @@
 import { TappdClient } from '@phala/dstack-sdk'
-import { toViemAccount } from '@phala/dstack-sdk/viem'
+import { toViemAccountSecure } from '@phala/dstack-sdk/viem'
 
 const domain = {
   name: 'Ether Mail',
@@ -36,7 +36,7 @@ export async function GET() {
   };
   const client = new TappdClient()
   const testDeriveKey = await client.deriveKey("ethereum");
-  const account = toViemAccount(testDeriveKey);
+  const account = toViemAccountSecure(testDeriveKey);
   console.log(`Account [${account.address}] Signing Typed Message [${message}]`);
   const signature = await account.signTypedData({
     // @ts-ignore

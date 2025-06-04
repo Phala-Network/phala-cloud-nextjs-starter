@@ -88,10 +88,10 @@
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.7.1.tgz#5738f6d765710921e7a751e00c20ae091ed8db0f"
   integrity sha512-B8XBPsn4vT/KJAGqDzbwztd+6Yte3P4V7iafm24bxgDe/mlRuK6xmWPuCNrKt2vDafZ8MfJLlchDG/vYafQEjQ==
 
-"@phala/dstack-sdk@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@phala/dstack-sdk/-/dstack-sdk-0.2.0.tgz#18957ca8ec23dcc08f13989a0da556c6e8d041f6"
-  integrity sha512-klz8jH0BHMjqUysvgpl5yXmK4QtgACjIS6yRyOlQHOiM2GwHKJRdQDddE5qyoCFWfE2Ky9WcvrsJBm/RLzOLvg==
+"@phala/dstack-sdk@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@phala/dstack-sdk/-/dstack-sdk-0.2.1.tgz#9220ee0bfcd1eab33065b8f2531212ff3a35adc1"
+  integrity sha512-P2L607TeJlvEG/Zi/u8t+khPcx5k8czZQJIi5tTFoZPT7owNykcfidW10xJPAVNk3r/pXDyUb9SfUBwwYro0XQ==
   optionalDependencies:
     "@noble/curves" "^1.8.1"
     "@solana/web3.js" "^1.98.0"

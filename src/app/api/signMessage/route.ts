@@ -1,5 +1,5 @@
 import { TappdClient } from '@phala/dstack-sdk';
-import { toViemAccount } from '@phala/dstack-sdk/viem';
+import { toViemAccountSecure } from '@phala/dstack-sdk/viem';
 
 export const dynamic = 'force-dynamic'
 
@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   const message = res.message;
   const client = new TappdClient()
   const testDeriveKey = await client.deriveKey("ethereum");
-  const account = toViemAccount(testDeriveKey);
+  const account = toViemAccountSecure(testDeriveKey);
   console.log(`Account [${account.address}] Signing Message [${message}]`);
   const signature = await account.signMessage({ message });
   console.log(`Message Signed [${signature}]`)

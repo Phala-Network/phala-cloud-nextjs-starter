@@ -1,5 +1,5 @@
 import { TappdClient } from '@phala/dstack-sdk'
-import { toViemAccount } from '@phala/dstack-sdk/viem'
+import { toViemAccountSecure } from '@phala/dstack-sdk/viem'
 import {
   keccak256,
   http,
@@ -23,7 +23,7 @@ export async function GET() {
   })
   const client = new TappdClient()
   const testDeriveKey = await client.deriveKey("ethereum");
-  const account = toViemAccount(testDeriveKey);
+  const account = toViemAccountSecure(testDeriveKey);
   const to = '0xC5227Cb20493b97bb02fADb20360fe28F52E2eff';
   const gweiAmount = 420;
   let result = {
