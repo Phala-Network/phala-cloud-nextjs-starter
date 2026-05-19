@@ -1,0 +1,55 @@
+:root {
+  --display-weight: 400;
+  --text-weight: 400;
+  --v3-heading: var(--font-fraunces), Georgia, serif;
+  --v3-body: var(--font-inter), system-ui, "Trebuchet MS", Arial, sans-serif;
+  --v3-ui: var(--font-inter), system-ui, "Trebuchet MS", Arial, sans-serif;
+  --v3-mono: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+@theme inline {
+  --font-display: var(--v3-heading);
+  --font-sans: var(--v3-body);
+  --font-text: var(--v3-body);
+  --font-mono: var(--v3-mono);
+
+  --text-caption: 11px;
+  --leading-caption: 1.2;
+  --text-eyebrow: 11px;
+  --leading-eyebrow: 1.2;
+  --tracking-eyebrow: 0.08em;
+  --text-body-sm: 13px;
+  --leading-body-sm: 1.5;
+  --text-body: 15px;
+  --leading-body: 1.65;
+  --text-body-lg: 18px;
+  --leading-body-lg: 1.4;
+  --text-ui: 15px;
+  --leading-ui: 1.2;
+  --text-card-title: 24px;
+  --leading-card-title: 1.1;
+}
+
+@layer base {
+  html,
+  body {
+    font-family: var(--v3-body);
+  }
+
+  .font-display {
+    font-family: var(--v3-heading);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .font-sans,
+  .font-text {
+    font-family: var(--v3-body);
+  }
+
+  .font-mono {
+    font-family: var(--v3-mono);
+    font-feature-settings: "tnum" 1, "zero" 1;
+    letter-spacing: 0;
+  }
+}
