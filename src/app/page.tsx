@@ -12,8 +12,10 @@ import { SignVerifyTab } from "@/components/tabs/sign-verify-tab";
 import { BlockchainTab } from "@/components/tabs/blockchain-tab";
 import { UtilsTab } from "@/components/tabs/utils-tab";
 import { DiagnosticsTab } from "@/components/tabs/diagnostics-tab";
+import pkg from "../../package.json";
 
-const SDK_VERSION = "0.5.8-beta.1";
+const SDK_VERSION =
+  pkg.dependencies["@phala/dstack-sdk"]?.replace(/^[\^~]/, "") ?? "unknown";
 
 export default function Home() {
   return (
