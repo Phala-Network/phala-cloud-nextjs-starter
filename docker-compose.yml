@@ -1,6 +1,6 @@
 services:
   app:
-    image: leechael/phala-cloud-nextjs-starter:latest
+    image: ghcr.io/phala-network/phala-cloud-nextjs-starter:v0.0.1
     container_name: app
     ports:
       - "3000:3000"
