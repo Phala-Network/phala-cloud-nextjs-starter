@@ -1,3 +1,28 @@
+## v0.0.1 (2026-06-02)
+
+- chore(release): update docker-compose.yml and CHANGELOG.md for v0.0.1 (e55af72)
+- chore(deps): bump @phala/dstack-sdk to 0.5.8 (a9072e8)
+- fix(starter): read SDK version from package.json instead of hardcoding (9ceb6b4)
+- chore(deps): bump @phala/dstack-sdk to 0.5.8-beta.2 (59ed678)
+- feat(starter): add KMS env-encrypt demo (encryptEnvVars + verifyEnvEncryptPublicKey) (bdfb14c)
+- feat: rebuild starter with shadcn/ui showcasing dstack-sdk 0.5.8-beta.1 (23e5e08)
+- update example with SDK v0.2.1 (904f6a6)
+- update dependencies & build docker image (54bc7d4)
+- Add docs link (9a5bb5a)
+- Fix Remote Attestation Button (e1e40b8)
+- fix link (2f52f23)
+- add .dockerignore (0aab191)
+- Merge pull request #1 from Leechael/update (711a7cb)
+- docs: fix (5df9381)
+- update code example with latest sdk (7a356aa)
+- Switch to base sepolia for testing and add superjson to handle bigint (e7b90db)
+- Update Code to use test values and add new functions to test with for signing messages, typed data and transactions (c39422c)
+- Update readme (1f6eb89)
+- Update docker commands (3555b08)
+- Add links (c1a0ea8)
+- Implement next.js viem sdk template for dstack (659524a)
+- Initial commit from Create Next App (dce11d1)
+
 # Changelog
 
 ## v0.0.1 (2026-06-02)
