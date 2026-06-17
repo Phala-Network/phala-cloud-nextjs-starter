@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useCallback } from "react";
 import { getKeyAction, getTlsKeyAction } from "@/app/actions/keys";
+import type { ActionResult, GetKeyResult, GetTlsKeyResult } from "@/app/actions/keys";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -15,6 +16,24 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { ResultPanel } from "@/components/result-panel";
+import { Copy, Check } from "lucide-react";
+
+function CopyButton({ text, label }: { text: string; label?: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = useCallback(async () => {
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }, [text]);
+
+  return (
+    <Button variant="outline" size="sm" onClick={handleCopy}>
+      {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+      {label ?? "Copy"}
+    </Button>
+  );
+}
 
 export function KeysTab() {
   return (
@@ -29,7 +48,7 @@ function GetKeyCard() {
   const [path, setPath] = useState("wallet/eth");
   const [purpose, setPurpose] = useState("");
   const [algorithm, setAlgorithm] = useState("secp256k1");
-  const [result, setResult] = useState<unknown>(null);
+  const [result, setResult] = useState<ActionResult<GetKeyResult> | null>(null);
   const [pending, start] = useTransition();
 
   return (
@@ -81,6 +100,11 @@ function GetKeyCard() {
         </Button>
         <Separator />
         <ResultPanel result={result} pending={pending} />
+        {result?.ok && (
+          <div className="flex gap-2">
+            <CopyButton text={JSON.stringify(result.data, null, 2)} label="Copy Result" />
+          </div>
+        )}
       </CardContent>
     </Card>
   );
@@ -91,7 +115,7 @@ function GetTlsKeyCard() {
   const [altNames, setAltNames] = useState("localhost,127.0.0.1");
   const [usageRaTls, setUsageRaTls] = useState(false);
   const [withAppInfo, setWithAppInfo] = useState(false);
-  const [result, setResult] = useState<unknown>(null);
+  const [result, setResult] = useState<ActionResult<GetTlsKeyResult> | null>(null);
   const [pending, start] = useTransition();
 
   return (
@@ -158,6 +182,14 @@ function GetTlsKeyCard() {
         </Button>
         <Separator />
         <ResultPanel result={result} pending={pending} />
+        {result?.ok && (
+          <div className="flex gap-2">
+            <CopyButton text={JSON.stringify(result.data, null, 2)} label="Copy Result" />
+            {result.data.certificateChain[0] && (
+              <CopyButton text={result.data.certificateChain[0]} label="Copy Cert" />
+            )}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
