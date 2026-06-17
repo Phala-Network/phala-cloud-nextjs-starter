@@ -1,3 +1,10 @@
+## v0.0.2 (2026-06-17)
+
+- Merge pull request #2 from Phala-Network/feat/ui-improvements (7f06a6b)
+- feat(starter): add verify link for getQuote result on proof.t16z.com (af2e65d)
+- feat(starter): add copy buttons for getKey and getTlsKey results (605429c)
+- chore(release): update docker-compose.yml and CHANGELOG.md for v0.0.1 (719dd1a)
+
 ## v0.0.1 (2026-06-02)
 
 - chore(release): update docker-compose.yml and CHANGELOG.md for v0.0.1 (e55af72)
