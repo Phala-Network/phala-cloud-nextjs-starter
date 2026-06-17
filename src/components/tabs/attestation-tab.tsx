@@ -6,12 +6,15 @@ import {
   getQuoteAction,
   infoAction,
 } from "@/app/actions/attestation";
+import type { GetQuoteResult } from "@/app/actions/attestation";
+import type { ActionResult } from "@/app/actions/keys";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { ResultPanel } from "@/components/result-panel";
+import { ExternalLink } from "lucide-react";
 
 export function AttestationTab() {
   return (
@@ -25,7 +28,7 @@ export function AttestationTab() {
 
 function GetQuoteCard() {
   const [reportData, setReportData] = useState("hello-dstack");
-  const [result, setResult] = useState<unknown>(null);
+  const [result, setResult] = useState<ActionResult<GetQuoteResult> | null>(null);
   const [pending, start] = useTransition();
   return (
     <Card>
@@ -53,6 +56,18 @@ function GetQuoteCard() {
         </Button>
         <Separator />
         <ResultPanel result={result} pending={pending} />
+        {result?.ok && (
+          <a
+            href={`https://proof.t16z.com/r?hex=${result.data.quote}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="outline" size="sm">
+              <ExternalLink className="size-3.5" />
+              Verify on proof.t16z.com
+            </Button>
+          </a>
+        )}
       </CardContent>
     </Card>
   );
