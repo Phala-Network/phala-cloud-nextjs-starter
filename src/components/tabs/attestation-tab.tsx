@@ -35,13 +35,15 @@ function GetQuoteCard() {
       <CardHeader>
         <CardTitle>getQuote</CardTitle>
         <CardDescription>
-          Generate a raw TDX quote with up to 64 bytes of caller-supplied report
-          data. Returns the quote, event log, and replayed RTMR values.
+          Generate a raw TDX quote. Caller input is hashed as
+          sha512("app-data:" || utf8(input)) before it becomes report_data, so it
+          cannot collide with RA-TLS. Returns the quote, event log, replayed
+          RTMR values, and the derivation.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
         <div className="grid gap-1.5">
-          <Label htmlFor="quote-rd">reportData (≤64 bytes)</Label>
+          <Label htmlFor="quote-rd">user input (hashed under app-data:)</Label>
           <Input
             id="quote-rd"
             value={reportData}
@@ -83,12 +85,13 @@ function AttestCard() {
         <CardTitle>attest</CardTitle>
         <CardDescription>
           Generate a versioned dstack attestation (works across TDX / GCP / Nitro
-          providers). Cleaner than raw quote for cross-platform deployments.
+          providers). Caller input is hashed as sha512("app-data:" || utf8(input))
+          before it becomes report_data.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
         <div className="grid gap-1.5">
-          <Label htmlFor="attest-rd">reportData (≤64 bytes)</Label>
+          <Label htmlFor="attest-rd">user input (hashed under app-data:)</Label>
           <Input
             id="attest-rd"
             value={reportData}
