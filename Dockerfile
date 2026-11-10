@@ -1,7 +1,9 @@
-# Install dependencies only when needed
-FROM node:20-alpine AS build
+# Node 24.22.2 + Alpine 3.24.4 (2026-11-05 security rebuild:
+# apk-tools 3.0.9, musl 1.2.6-r3, openssh 10.3_p1-r2)
+FROM node:24.22.2-alpine3.24@sha256:a34ab6d7f6f4813f4d0c5469d74685604b962fbdbf5793a7bc7b4998ecb867c8 AS build
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
+RUN apk upgrade --no-cache \
+ && apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
@@ -19,15 +21,16 @@ COPY . .
 RUN npm run build
 
 # Production image, copy all the files and run next
-FROM node:20-alpine AS runner
+FROM node:24.22.2-alpine3.24@sha256:a34ab6d7f6f4813f4d0c5469d74685604b962fbdbf5793a7bc7b4998ecb867c8 AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN apk upgrade --no-cache \
+ && addgroup --system --gid 1001 nodejs \
+ && adduser --system --uid 1001 nextjs
 
 # You only need to copy next.config.js if you are NOT using the default configuration
 COPY --from=build /app/next.config.mjs ./

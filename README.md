@@ -5,7 +5,7 @@
 This is a template for developing a [Next.js](https://nextjs.org/)-based app with boilerplate code targeting deployment on [Phala Cloud](https://cloud.phala.network/) and [DStack](https://github.com/dstack-TEE/dstack/). It includes the SDK by default to make integration with TEE features easier. This repo also includes a default Dockerfile and docker-compose.yml for deployment.
 
 ## Requirements
-- [Node](https://nodejs.org/en) >= v18.18
+- [Node](https://nodejs.org/en) >= v24
 - [yarn](https://yarnpkg.com/)
 - Docker or Orbstack
 
