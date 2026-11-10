@@ -1,3 +1,11 @@
+## v0.1.0 (2026-11-10)
+
+- Merge pull request #4 from Phala-Network/fix/hash-quote-report-data (1cc1b49)
+- fix: hash quote report_data under the app-data tag (d0148b6)
+- Merge pull request #3 from Phala-Network/chore/node-24-deps (ec2cecb)
+- chore: bump deps and switch Docker build to Node 24 (02a9252)
+- chore(release): update docker-compose.yml and CHANGELOG.md for v0.0.2 (be6ee3c)
+
 ## v0.0.2 (2026-06-17)
 
 - Merge pull request #2 from Phala-Network/feat/ui-improvements (7f06a6b)
