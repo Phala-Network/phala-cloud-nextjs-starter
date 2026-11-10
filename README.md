@@ -48,6 +48,10 @@ yarn dev
 
 By default, the Next.js development server will listen on port 3000. Open http://127.0.0.1:3000/ in your browser and check.
 
+The Attestation tab hashes caller input as `sha512("app-data:" || utf8(input))`
+before it becomes TDX `report_data`, so a quote cannot be reused as an RA-TLS
+client certificate. The result includes the original input and the derivation.
+
 This repo also includes code snippets for the following common use cases:
 
 - `/api/tdx_quote`: The `reportdata` is `test` and generates the quote for attestation report via `tdxQuote` API.

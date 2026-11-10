@@ -1,7 +1,15 @@
 "use server";
 
+import { createHash } from "crypto";
 import { DstackClient } from "@phala/dstack-sdk";
 import type { ActionResult } from "./keys";
+
+const REPORT_DATA_TAG = "app-data";
+const REPORT_DATA_DERIVATION = 'sha512("app-data:" || utf8(user_input))';
+
+function appDataReportData(input: string): Buffer {
+  return createHash("sha512").update(REPORT_DATA_TAG).update(":").update(input).digest();
+}
 
 export type GetQuoteResult = {
   quote: string;
@@ -9,6 +17,10 @@ export type GetQuoteResult = {
   reportData?: string;
   vmConfig?: string;
   rtmrs: string[];
+  userInput: string;
+  reportDataTag: string;
+  reportDataHex: string;
+  reportDataDerivation: string;
 };
 
 export async function getQuoteAction(
@@ -16,8 +28,9 @@ export async function getQuoteAction(
 ): Promise<ActionResult<GetQuoteResult>> {
   try {
     if (!reportData) throw new Error("reportData required");
+    const hashed = appDataReportData(reportData);
     const client = new DstackClient();
-    const res = await client.getQuote(reportData);
+    const res = await client.getQuote(hashed);
     return {
       ok: true,
       data: {
@@ -26,6 +39,10 @@ export async function getQuoteAction(
         reportData: res.report_data,
         vmConfig: res.vm_config,
         rtmrs: res.replayRtmrs(),
+        userInput: reportData,
+        reportDataTag: REPORT_DATA_TAG,
+        reportDataHex: hashed.toString("hex"),
+        reportDataDerivation: REPORT_DATA_DERIVATION,
       },
     };
   } catch (err) {
@@ -35,6 +52,10 @@ export async function getQuoteAction(
 
 export type AttestResult = {
   attestation: string;
+  userInput: string;
+  reportDataTag: string;
+  reportDataHex: string;
+  reportDataDerivation: string;
 };
 
 export async function attestAction(
@@ -42,9 +63,19 @@ export async function attestAction(
 ): Promise<ActionResult<AttestResult>> {
   try {
     if (!reportData) throw new Error("reportData required");
+    const hashed = appDataReportData(reportData);
     const client = new DstackClient();
-    const res = await client.attest(reportData);
-    return { ok: true, data: { attestation: res.attestation } };
+    const res = await client.attest(hashed);
+    return {
+      ok: true,
+      data: {
+        attestation: res.attestation,
+        userInput: reportData,
+        reportDataTag: REPORT_DATA_TAG,
+        reportDataHex: hashed.toString("hex"),
+        reportDataDerivation: REPORT_DATA_DERIVATION,
+      },
+    };
   } catch (err) {
     return { ok: false, error: err instanceof Error ? err.message : String(err) };
   }
