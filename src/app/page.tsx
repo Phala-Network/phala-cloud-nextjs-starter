@@ -30,7 +30,7 @@ export default function Home() {
           </Badge>
         </div>
         <p className="text-sm text-muted-foreground max-w-3xl">
-          Interactive demo of every <code className="text-xs">DstackClient</code>{" "}
+          Interactive demo of every <code className="text-xs">DstackClientV0</code>{" "}
           method plus the viem / solana / compose-hash helpers. Each tab maps to
           one capability surface; each card runs a server action talking to the
           guest agent on <code className="text-xs">/var/run/dstack.sock</code>{" "}
