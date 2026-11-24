@@ -1,3 +1,16 @@
+## v0.2.0 (2026-11-24)
+
+- Merge pull request #7 from Phala-Network/feat/dstack-v1-examples (21974e5)
+- feat: add dstack guest API v1 examples and mark v0 as legacy (d0d030d)
+- Merge pull request #6 from Phala-Network/chore/dstack-sdk-0.6 (041cdb8)
+- docs: describe the simulator without build steps (f60f454)
+- docs: switch to the dstack simulator and dstack sdk 0.6 (f9eabdb)
+- fix(compose): mount dstack.sock instead of tappd.sock (c3f39d6)
+- chore(deps): bump dstack sdk to 0.6 and pin the v0 client (3754efb)
+- Merge pull request #5 from Phala-Network/chore/gha-node24-actions (ca9b380)
+- chore: bump GitHub Actions to Node 24 runtimes (18a2e5b)
+- chore(release): update docker-compose.yml and CHANGELOG.md for v0.1.0 (c279b56)
+
 ## Unreleased
 
 - feat: add dstack guest API v1 examples (`DstackClient`) as the default tab; keep the v0 examples under "v0 (legacy)"
