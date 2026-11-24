@@ -24,23 +24,16 @@ yarn
 cp env.local.example .env.local
 ```
 
-We also need to download the DStack simulator:
+This starter uses the frozen v0 guest API (`DstackClientV0` from `@phala/dstack-sdk` 0.6.0). Local development needs a running dstack guest-agent simulator (Linux). See [sdk/simulator](https://github.com/Dstack-TEE/dstack/tree/next/sdk/simulator).
+
+Point the SDK at it with `DSTACK_SIMULATOR_ENDPOINT` — a unix socket path, or an `http://` / `https://` URL (the v0 client accepts both). Set it in `.env.local` (see `env.local.example`) or export it:
 
 ```shell
-# Mac
-wget https://github.com/Leechael/tappd-simulator/releases/download/v0.1.4/tappd-simulator-0.1.4-aarch64-apple-darwin.tgz
-tar -xvf tappd-simulator-0.1.4-aarch64-apple-darwin.tgz
-cd tappd-simulator-0.1.4-aarch64-apple-darwin
-./tappd-simulator -l unix:/tmp/tappd.sock
-
-# Linux
-wget https://github.com/Leechael/tappd-simulator/releases/download/v0.1.4/tappd-simulator-0.1.4-x86_64-linux-musl.tgz
-tar -xvf tappd-simulator-0.1.4-x86_64-linux-musl.tgz
-cd tappd-simulator-0.1.4-x86_64-linux-musl
-./tappd-simulator -l unix:/tmp/tappd.sock
+export DSTACK_SIMULATOR_ENDPOINT=/path/to/dstack.sock
+# or: export DSTACK_SIMULATOR_ENDPOINT=http://127.0.0.1:8090
 ```
 
-Once the simulator is running, you need to open another terminal to start your Next.js development server:
+Then start the Next.js development server:
 
 ```shell
 yarn dev
@@ -54,11 +47,7 @@ client certificate. The result includes the original input and the derivation.
 
 This repo also includes code snippets for the following common use cases:
 
-- `/api/tdx_quote`: The `reportdata` is `test` and generates the quote for attestation report via `tdxQuote` API.
-- `/api/tdx_quote_raw`: The `reportdata` is `Hello DStack!` and generates the quote for attestation report. The difference from `/api/dx_quote` is that you can see the raw text `Hello DStack!` in [Attestation Explorer](https://proof.t16z.com/).
-- `/api/eth_account/address`: Using the `deriveKey` API to generate a deterministic wallet for Ethereum, a.k.a. a wallet held by the TEE instance.
-- `/api/solana_account/address`: Using the `deriveKey` API to generate a deterministic wallet for Solana, a.k.a. a wallet held by the TEE instance.
-- `/api/info`: Returns the TCB Info of the hosted CVM.
+The UI tabs call `DstackClientV0` (`getKey`, `getQuote`, `getTlsKey`, `info`, `sign` / `verify`, `emitEvent`) plus `encryptEnvVars` / `getComposeHash` helpers.
 
 ## Build
 

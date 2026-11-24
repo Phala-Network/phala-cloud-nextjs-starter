@@ -1,7 +1,7 @@
 "use server";
 
 import { createHash } from "crypto";
-import { DstackClient } from "@phala/dstack-sdk";
+import { DstackClientV0 } from "@phala/dstack-sdk";
 import type { ActionResult } from "./keys";
 
 const REPORT_DATA_TAG = "app-data";
@@ -16,7 +16,6 @@ export type GetQuoteResult = {
   eventLog: string;
   reportData?: string;
   vmConfig?: string;
-  rtmrs: string[];
   userInput: string;
   reportDataTag: string;
   reportDataHex: string;
@@ -29,7 +28,7 @@ export async function getQuoteAction(
   try {
     if (!reportData) throw new Error("reportData required");
     const hashed = appDataReportData(reportData);
-    const client = new DstackClient();
+    const client = new DstackClientV0();
     const res = await client.getQuote(hashed);
     return {
       ok: true,
@@ -38,7 +37,6 @@ export async function getQuoteAction(
         eventLog: res.event_log,
         reportData: res.report_data,
         vmConfig: res.vm_config,
-        rtmrs: res.replayRtmrs(),
         userInput: reportData,
         reportDataTag: REPORT_DATA_TAG,
         reportDataHex: hashed.toString("hex"),
@@ -64,7 +62,7 @@ export async function attestAction(
   try {
     if (!reportData) throw new Error("reportData required");
     const hashed = appDataReportData(reportData);
-    const client = new DstackClient();
+    const client = new DstackClientV0();
     const res = await client.attest(hashed);
     return {
       ok: true,
@@ -98,7 +96,7 @@ export type InfoResult = {
 
 export async function infoAction(): Promise<ActionResult<InfoResult>> {
   try {
-    const client = new DstackClient();
+    const client = new DstackClientV0();
     const res = await client.info();
     return {
       ok: true,
