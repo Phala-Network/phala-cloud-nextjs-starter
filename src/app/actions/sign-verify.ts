@@ -1,6 +1,6 @@
 "use server";
 
-import { DstackClient } from "@phala/dstack-sdk";
+import { DstackClientV0 } from "@phala/dstack-sdk";
 import type { ActionResult } from "./keys";
 
 export type SignResult = {
@@ -14,7 +14,7 @@ export async function signAction(input: {
   message: string;
 }): Promise<ActionResult<SignResult>> {
   try {
-    const client = new DstackClient();
+    const client = new DstackClientV0();
     const res = await client.sign(input.algorithm, input.message);
     return {
       ok: true,
@@ -42,7 +42,7 @@ export async function verifyAction(input: {
   publicKeyHex: string;
 }): Promise<ActionResult<VerifyResult>> {
   try {
-    const client = new DstackClient();
+    const client = new DstackClientV0();
     const res = await client.verify(
       input.algorithm,
       input.message,
@@ -60,7 +60,7 @@ export async function emitEventAction(input: {
   payload: string;
 }): Promise<ActionResult<{ emitted: true }>> {
   try {
-    const client = new DstackClient();
+    const client = new DstackClientV0();
     await client.emitEvent(input.event, input.payload);
     return { ok: true, data: { emitted: true } };
   } catch (err) {

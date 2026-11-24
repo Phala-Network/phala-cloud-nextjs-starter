@@ -1,6 +1,6 @@
 "use server";
 
-import { DstackClient } from "@phala/dstack-sdk";
+import { DstackClientV0 } from "@phala/dstack-sdk";
 import { toViemAccountSecure } from "@phala/dstack-sdk/viem";
 import { toKeypairSecure } from "@phala/dstack-sdk/solana";
 import type { ActionResult } from "./keys";
@@ -15,7 +15,7 @@ export async function ethAccountAction(input: {
   message?: string;
 }): Promise<ActionResult<EthAccountResult>> {
   try {
-    const client = new DstackClient();
+    const client = new DstackClientV0();
     const key = await client.getKey(input.path || "ethereum");
     const account = toViemAccountSecure(key);
     const out: EthAccountResult = { address: account.address };
@@ -36,7 +36,7 @@ export async function solanaAccountAction(input: {
   path: string;
 }): Promise<ActionResult<SolanaAccountResult>> {
   try {
-    const client = new DstackClient();
+    const client = new DstackClientV0();
     const key = await client.getKey(input.path || "solana");
     const keypair = toKeypairSecure(key);
     return { ok: true, data: { publicKey: keypair.publicKey.toBase58() } };

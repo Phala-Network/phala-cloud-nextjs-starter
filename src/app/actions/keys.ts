@@ -1,6 +1,6 @@
 "use server";
 
-import { DstackClient } from "@phala/dstack-sdk";
+import { DstackClientV0 } from "@phala/dstack-sdk";
 
 export type ActionResult<T> =
   | { ok: true; data: T }
@@ -17,7 +17,7 @@ export async function getKeyAction(input: {
   algorithm?: string;
 }): Promise<ActionResult<GetKeyResult>> {
   try {
-    const client = new DstackClient();
+    const client = new DstackClientV0();
     const res = await client.getKey(
       input.path ?? "",
       input.purpose ?? "",
@@ -53,7 +53,7 @@ export async function getTlsKeyAction(input: {
   withAppInfo?: boolean;
 }): Promise<ActionResult<GetTlsKeyResult>> {
   try {
-    const client = new DstackClient();
+    const client = new DstackClientV0();
     const res = await client.getTlsKey({
       subject: input.subject,
       altNames: input.altNames,
