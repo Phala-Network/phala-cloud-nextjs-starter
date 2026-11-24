@@ -12,6 +12,7 @@ import { SignVerifyTab } from "@/components/tabs/sign-verify-tab";
 import { BlockchainTab } from "@/components/tabs/blockchain-tab";
 import { UtilsTab } from "@/components/tabs/utils-tab";
 import { DiagnosticsTab } from "@/components/tabs/diagnostics-tab";
+import { V1Tab } from "@/components/tabs/v1-tab";
 import pkg from "../../package.json";
 
 const SDK_VERSION =
@@ -30,46 +31,67 @@ export default function Home() {
           </Badge>
         </div>
         <p className="text-sm text-muted-foreground max-w-3xl">
-          Interactive demo of every <code className="text-xs">DstackClientV0</code>{" "}
-          method plus the viem / solana / compose-hash helpers. Each tab maps to
-          one capability surface; each card runs a server action talking to the
-          guest agent on <code className="text-xs">/var/run/dstack.sock</code>{" "}
-          (or whatever <code className="text-xs">DSTACK_SIMULATOR_ENDPOINT</code>{" "}
-          you have set).
+          Interactive demo of the dstack guest API v1 (
+          <code className="text-xs">DstackClient</code>). Each card runs a
+          server action talking to the guest agent on{" "}
+          <code className="text-xs">/var/run/dstack.sock</code> (or whatever{" "}
+          <code className="text-xs">DSTACK_SIMULATOR_ENDPOINT</code> you have
+          set). Requires dstack OS &gt;= 0.6.0.
         </p>
       </header>
 
       <Separator />
 
-      <Tabs defaultValue="keys" className="w-full flex-col">
+      <Tabs defaultValue="v1" className="w-full flex-col">
         <TabsList className="flex w-fit flex-wrap h-auto gap-1">
-          <TabsTrigger value="keys">Keys</TabsTrigger>
-          <TabsTrigger value="attestation">Attestation</TabsTrigger>
-          <TabsTrigger value="sign">Sign &amp; Verify</TabsTrigger>
-          <TabsTrigger value="chain">Blockchain</TabsTrigger>
+          <TabsTrigger value="v1">v1</TabsTrigger>
           <TabsTrigger value="utils">Compose &amp; Env</TabsTrigger>
-          <TabsTrigger value="diag">Diagnostics</TabsTrigger>
+          <TabsTrigger value="v0">v0 (legacy)</TabsTrigger>
         </TabsList>
-
-        <TabsContent value="keys" className="mt-6">
-          <KeysTab />
-        </TabsContent>
-        <TabsContent value="attestation" className="mt-6">
-          <AttestationTab />
-        </TabsContent>
-        <TabsContent value="sign" className="mt-6">
-          <SignVerifyTab />
-        </TabsContent>
-        <TabsContent value="chain" className="mt-6">
-          <BlockchainTab />
+        <TabsContent value="v1" className="mt-6">
+          <V1Tab />
         </TabsContent>
         <TabsContent value="utils" className="mt-6">
           <UtilsTab />
         </TabsContent>
-        <TabsContent value="diag" className="mt-6">
-          <DiagnosticsTab />
+        <TabsContent value="v0" className="mt-6 space-y-6">
+          <p className="text-sm text-muted-foreground">
+            Use v0 only for keys already derived with v0, or on dstack OS &lt;
+            0.6 (such as current GPU images).
+          </p>
+          <V0Tabs />
         </TabsContent>
       </Tabs>
     </main>
+  );
+}
+
+function V0Tabs() {
+  return (
+    <Tabs defaultValue="keys" className="w-full flex-col">
+      <TabsList className="flex w-fit flex-wrap h-auto gap-1">
+        <TabsTrigger value="keys">Keys</TabsTrigger>
+        <TabsTrigger value="attestation">Attestation</TabsTrigger>
+        <TabsTrigger value="sign">Sign &amp; Verify</TabsTrigger>
+        <TabsTrigger value="chain">Blockchain</TabsTrigger>
+        <TabsTrigger value="diag">Diagnostics</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="keys" className="mt-6">
+        <KeysTab />
+      </TabsContent>
+      <TabsContent value="attestation" className="mt-6">
+        <AttestationTab />
+      </TabsContent>
+      <TabsContent value="sign" className="mt-6">
+        <SignVerifyTab />
+      </TabsContent>
+      <TabsContent value="chain" className="mt-6">
+        <BlockchainTab />
+      </TabsContent>
+      <TabsContent value="diag" className="mt-6">
+        <DiagnosticsTab />
+      </TabsContent>
+    </Tabs>
   );
 }
