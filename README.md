@@ -24,9 +24,9 @@ yarn
 cp env.local.example .env.local
 ```
 
-This starter uses the frozen v0 guest API (`DstackClientV0` from `@phala/dstack-sdk` 0.6.0). Local development needs a running dstack guest-agent simulator (Linux). See [sdk/simulator](https://github.com/Dstack-TEE/dstack/tree/next/sdk/simulator).
+This starter demos the dstack guest API v1 (`DstackClient` from `@phala/dstack-sdk` 0.6.0). v1 needs dstack OS >= 0.6.0 (guest agent >= 0.6.0). On Phala Cloud, CPU images dstack-0.6.x have it; GPU images are still 0.5.15 and only speak v0 (see [Legacy v0](#legacy-v0)). Local development needs a running dstack guest-agent simulator (Linux) that serves v1. See [sdk/simulator](https://github.com/Dstack-TEE/dstack/tree/next/sdk/simulator).
 
-Point the SDK at it with `DSTACK_SIMULATOR_ENDPOINT` — a unix socket path, or an `http://` / `https://` URL (the v0 client accepts both). Set it in `.env.local` (see `env.local.example`) or export it:
+Point the SDK at it with `DSTACK_SIMULATOR_ENDPOINT` — a unix socket path, or an `http://` / `https://` URL. Set it in `.env.local` (see `env.local.example`) or export it:
 
 ```shell
 export DSTACK_SIMULATOR_ENDPOINT=/path/to/dstack.sock
@@ -41,13 +41,29 @@ yarn dev
 
 By default, the Next.js development server will listen on port 3000. Open http://127.0.0.1:3000/ in your browser and check.
 
-The Attestation tab hashes caller input as `sha512("app-data:" || utf8(input))`
+The v1 tab hashes caller input as `sha512("app-data:" || utf8(input))`
 before it becomes TDX `report_data`, so a quote cannot be reused as an RA-TLS
 client certificate. The result includes the original input and the derivation.
 
-This repo also includes code snippets for the following common use cases:
+The v1 tab calls `DstackClient` (`info`, `version`, `getKey`, `attest`, `issueCert`) and builds an Ethereum account (viem `privateKeyToAccount`) and a Solana keypair (`Keypair.fromSeed`) from `getKey` bytes:
 
-The UI tabs call `DstackClientV0` (`getKey`, `getQuote`, `getTlsKey`, `info`, `sign` / `verify`, `emitEvent`) plus `encryptEnvVars` / `getComposeHash` helpers.
+```ts
+import { DstackClient } from "@phala/dstack-sdk";
+
+const client = new DstackClient();
+const { key } = await client.getKey("wallet/ethereum", "secp256k1"); // 32 bytes
+const { attestation } = await client.attest(Buffer.from("my-report-data")); // 1-64 bytes
+```
+
+Do not hold assets in a wallet derived from `getKey`: the key is a function of the KMS root, so these wallets suit demos and low-value or rotatable signing only. See the [dstack SDK warning](https://github.com/Dstack-TEE/dstack/blob/next/sdk/js/README.md#blockchain-helpers).
+
+The "Compose & Env" tab (`getComposeHash`, `encryptEnvVars`) needs no guest agent and works with either API.
+
+## Legacy v0
+
+The "v0 (legacy)" tab keeps the previous `DstackClientV0` examples (`getKey`, `getQuote`, `getTlsKey`, `info`, `sign` / `verify`, `emitEvent`, viem / solana adapters). Use it only if your app already published keys derived with v0, or you run on dstack OS < 0.6 such as current GPU images.
+
+> **v1 keys are not v0 keys.** `getKey` derives different key material on the two APIs for the same name, and there is no migration path back. An app that has published v0-derived addresses or keys must keep using `DstackClientV0`.
 
 ## Build
 

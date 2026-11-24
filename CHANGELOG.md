@@ -1,3 +1,7 @@
+## Unreleased
+
+- feat: add dstack guest API v1 examples (`DstackClient`) as the default tab; keep the v0 examples under "v0 (legacy)"
+
 ## v0.1.0 (2026-11-10)
 
 - Merge pull request #4 from Phala-Network/fix/hash-quote-report-data (1cc1b49)
